@@ -10,9 +10,9 @@ pipeline {
                     // If "returnStatus" is set to true, the step returns the script's exit code instead of failing the build automatically.
                     def scriptExitCode = powershell (
                         script: '''
-                            .\RemoteServiceControl.ps1 `
+                            .\\RemoteServiceControl.ps1 `
                                 -ComputerName "myServer.domain.local" `
-                                -Username "kcf\Administrator" `
+                                -Username "kcf\\Administrator" `
                                 -Password "SomePassword" `
                                 -ServiceName "Spooler" `
                                 -Action "Stop"

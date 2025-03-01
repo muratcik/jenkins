@@ -94,6 +94,25 @@ pipeline {
                     // Store in an environment variable for next stage
                     echo "Parsed exit code: ${exitCode}"
 
+                    // 1) Trim whitespace at the edges
+                    rawOutput = rawOutput.trim()
+
+                    // 2) Split on newlines
+                    def lines = rawOutput.split('\\r?\\n')
+
+                    // 3) Filter out lines that contain "##exitcode:"
+                    def filteredLines = lines.findAll { line ->
+                    !line.contains('##exitcode:')
+                    }
+
+                    // 4) Re-assemble the cleaned output
+                    def cleanedOutput = filteredLines.join('\n')
+
+                    // 5) Print the cleaned output without the ##exitcode line
+                    echo "Cleaned Output:\n${cleanedOutput}"
+
+                    env.PS_OUTPUT = cleanedOutput.toString()
+
                     // Fail the pipeline if getdate.ps1 returns nonzero exit code
                     if (exitCode != 0) {
                         error "getdate.ps1 failed with exit code: ${exitCode}"

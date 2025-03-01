@@ -72,6 +72,54 @@ pipeline {
                 }
             }
         }
+
+        stage('Run getdate.ps1 and Capture Output') {
+            steps {
+                script {
+                    // Run getdate.ps1 and capture both output and exit code
+                    def getDateResult = powershell(
+                        script: '.\\Reboot\\getdate.ps1',
+                        returnStdout: true,
+                        returnStatus: true
+                    )
+
+                    def output = getDateResult[0].trim() // First element is stdout
+                    def exitCode = getDateResult[1]      // Second element is exit code
+
+                    echo "Captured Output: ${output}"
+                    echo "Exit Code from getdate.ps1: ${exitCode}"
+
+                    // Store in an environment variable for next stage
+                    env.PS_OUTPUT = output
+
+                    // Fail the pipeline if getdate.ps1 returns nonzero exit code
+                    if (exitCode != 0) {
+                        error "getdate.ps1 failed with exit code: ${exitCode}"
+                    }
+                }
+            }
+        }
+
+        stage('Pass Output to processdate.ps1') {
+            steps {
+                script {
+                    // Run processdate.ps1 with captured output
+                    def processResult = powershell(
+                        script: ".\\Reboot\\processdate.ps1 -InputValue \"${env.PS_OUTPUT}\"",
+                        returnStatus: true
+                    )
+
+                    def exitCode = processResult // Only one value (exit code) is returned
+
+                    echo "Exit Code from processdate.ps1: ${exitCode}"
+
+                    // Fail the pipeline if processdate.ps1 returns nonzero exit code
+                    if (exitCode != 0) {
+                        error "processdate.ps1 failed with exit code: ${exitCode}"
+                    }
+                }
+            }
+        }
     }
 
     post {

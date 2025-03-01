@@ -4,7 +4,7 @@
 $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 Write-Output $timestamp
 
-$exitCode = 123
+$exitCode = 0
 
 Write-Output "##exitcode:$exitCode"
 

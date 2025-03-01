@@ -13,7 +13,7 @@ pipeline {
                             .\\winservice.ps1 `
                                 -ComputerName "myServer.domain.local" `
                                 -Username "kcf\\Administrator" `
-                                -Password "SomePassword" `
+                                -Password "asdASD123!" `
                                 -ServiceName "Spooler" `
                                 -Action "Stop"
                         ''',

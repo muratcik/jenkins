@@ -7,7 +7,7 @@ param(
     [string]$Username,
 
     [Parameter(Mandatory = $true)]
-    [SecureString]$Password,
+    [String]$Password,
 
     [Parameter(Mandatory = $true)]
     [string]$ServiceName,
@@ -20,7 +20,7 @@ param(
 $ErrorActionPreference = 'Stop'
 
 # Convert the plain-text password to a secure string
-# $SecurePassword = ConvertTo-SecureString $Password -AsPlainText -Force
+$SecurePassword = ConvertTo-SecureString $Password -AsPlainText -Force
 
 # Build a PSCredential object from the username and secure string
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential `

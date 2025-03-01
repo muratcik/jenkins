@@ -6,7 +6,7 @@ Write-Output $timestamp
 
 $exitCode = 123
 
-Write-Host "##exitcode:$exitCode"
+Write-Output "##exitcode:$exitCode"
 
 # Exit with success code 0
 exit 0

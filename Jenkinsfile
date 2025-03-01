@@ -12,7 +12,7 @@ pipeline {
                         script: """
                             # Run the RemoteServiceControl.ps1 script
                             # Provide your own real values for these parameters or pull them from Jenkins credentials.
-                            .\\RemoteServiceControl.ps1 `
+                            .\\winservice.ps1 `
                                 -ComputerName "dc1.kcf.com" `
                                 -Username "kcf\\\Administrator" `
                                 -Password "asdASD123!" `
@@ -24,7 +24,7 @@ pipeline {
 
                     // If exit code != 0, mark build as failed
                     if (scriptExitCode != 0) {
-                        error "RemoteServiceControl.ps1 failed with exit code: ${scriptExitCode}"
+                        error "winservice.ps1 failed with exit code: ${scriptExitCode}"
                     }
                 }
             }

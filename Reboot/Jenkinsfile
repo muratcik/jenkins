@@ -1,9 +1,5 @@
 pipeline {
-    agent any
-
-    triggers {
-        cron('26 13 1 3 * 2025') // Run at 1:12 PM on March 1, 2025
-    }
+    agent any    
 
     stages {        
 

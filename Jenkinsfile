@@ -17,8 +17,7 @@ pipeline {
                                 -ServiceName "Spooler" `
                                 -Action "Stop"
                         ''',
-                        returnStatus: true
-                        returnStatus: true
+                        returnStatus: true                        
                     )
 
                     // If exit code != 0, mark build as failed

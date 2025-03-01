@@ -77,20 +77,22 @@ pipeline {
             steps {
                 script {
                     // Run getdate.ps1 and capture both output and exit code
-                    def getDateResult = powershell(
+                    def rawOutput = powershell(
                         script: '.\\Reboot\\getdate.ps1',
-                        returnStdout: true,
-                        returnStatus: true
+                        returnStdout: true                        
                     )
 
-                    def output = getDateResult[0].trim() // First element is stdout
-                    def exitCode = getDateResult[1]      // Second element is exit code
+                    echo "Raw output:\n${rawOutput}"
 
-                    echo "Captured Output: ${output}"
-                    echo "Exit Code from getdate.ps1: ${exitCode}"
+                    // 2) Parse the exit code from the special marker
+                    def exitCode = 0
+                    def matcher = (rawOutput =~ /##exitcode:(\d+)/)
+                    if (matcher) {
+                        exitCode = matcher[0][1].toInteger()
+                    }
 
                     // Store in an environment variable for next stage
-                    env.PS_OUTPUT = output
+                    echo "Parsed exit code: ${exitCode}"
 
                     // Fail the pipeline if getdate.ps1 returns nonzero exit code
                     if (exitCode != 0) {

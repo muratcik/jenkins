@@ -11,7 +11,7 @@ pipeline {
                     def scriptExitCode = powershell (
                         script: '''
                             .\\winservice.ps1 `
-                                -ComputerName "myServer.domain.local" `
+                                -ComputerName "dc1.kcf.com" `
                                 -Username "kcf\\Administrator" `
                                 -Password "asdASD123!" `
                                 -ServiceName "Spooler" `

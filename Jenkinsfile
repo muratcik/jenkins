@@ -14,7 +14,7 @@ pipeline {
                                 -ComputerName "dc1.kcf.com" `
                                 -Username "kcf\\Administrator" `
                                 -Password "asdASD123!" `
-                                -ServiceName "Spooler" `
+                                -ServiceName "Spoolerr" `
                                 -Action "Stop"
                         ''',
                         returnStatus: true                        
